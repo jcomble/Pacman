@@ -1,5 +1,4 @@
 package View;
-
 import java.awt.Color;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
@@ -8,18 +7,38 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+
 import Listes.Liste;
 import Logic.Controller;
 import Logic.Fruits;
 import Logic.Ghost;
 
+
+/**
+ * 
+ * 
+ *
+ */
 public class Game {
 	
+	
+	/**
+	 * La direction du pacman 
+	 */
 	private static char actual_direction = '→';
-	private Controller controller;
+	/*
+	 * Le contrroleur qui va rassembller tout les éléments du jeu (pacman, ghost, fruit, walls ,...)
+	 */
+	private Controller controller = new Controller();
 
-	// Instancier la classe Image qui charger tout les images du jeu
+	/**
+	 * Tout les objets Type ImageIcon sont dans l'attribut img à l'aide de la classe Image (pour organier le code )
+	 */
 	private Image img = new Image();	
+	
+	
+	
+	
 	
 	/**
 	 * Associer à une label les informations du jeu
@@ -34,9 +53,8 @@ public class Game {
 	}
 	
 	/**
-	 * Supprimer tout les murs donnée du frame 
-	 * @param frame le frame ou on veut supprimer les murs
-	 * @param list_murs quand veut les supprimer 
+	 * Supprimer tout les élément du frame
+	 * @param frame 
 	 */
 	private void frame_reset(JFrame frame) {
 		frame.getContentPane().removeAll();
@@ -94,7 +112,7 @@ public class Game {
 	}
 	
 	/**
-	 * Mettre les ghosts au layeredpane
+	 * Mettre les ghosts au panel
 	 * @param panel où on met les ghosts
 	 * @return la liste qui contient les labels qui representent les ghostes
 	 */
@@ -135,15 +153,23 @@ public class Game {
 		return list_ghosts_label;
 	}
 	/**
-	 * Constructeur.
+	 * Charegement et lancement du jeu 
 	 */
     public Game() {
-    	Controller controller = new Controller();
-    	this.controller = controller;
+    	
+    	//##################### Mise en place les éléments du jeu #########################
+    	
+    	
+    	// Instancier la classe frame
         Frame frame = new Frame();
+        
+        // Instancier la classe JLayeredPane puis on l'ajoute au objet frame
         JLayeredPane panel = new JLayeredPane();
         panel.setBounds(0, 0, 1000, 1000);
         frame.add(panel);
+        
+        // Instancier la classe Jlabel qui va contient les informations du jeu (score, points de vie , niveau )
+        // et mise en place du style (dimention, coleur , position ...) puis l'ajouer au panel 
         JLabel barre_info_Score = new JLabel();
         read_score(barre_info_Score);
         barre_info_Score.setBounds(360, 860, 1000, 10);
@@ -151,20 +177,27 @@ public class Game {
         barre_info_Score.setBackground(Color.black);
         barre_info_Score.setOpaque(true);
         panel.add(barre_info_Score, Integer.valueOf(4));
+        
+        // Ajouter les murs au frame
         put_walls(frame);
+        
+        // Ajouter les Teleporteurs au frame
         put_teleps(frame);
+        
+        // Poser les fruits sur le panel et les stocker dans la variables apples
         Liste<JLabel> apples = put_apples(panel);
+        
+        // Poser les ghost sur le panel et les stocker dans la variables lis_ghosts_label
         Liste<JLabel> list_ghosts_label = put_ghosts(panel);
-        for (int i = 0; i < controller.get_telep().size(); i++) {
-            int pos_x = controller.get_telep().get(i).getPos_X();
-            int pos_y = controller.get_telep().get(i).getPos_Y();
-            JPanel telep = new JPanel();
-            telep.setBackground(Color.gray);
-            telep.setBounds(pos_x, pos_y, 40, 40);
-            frame.add(telep);
-        }
+        
+        // Instancier une label qui va representé le pacman 
         JLabel pacman = new JLabel();
+        
+        // Instancier une Imageicon qui va contient l'image du pacman
         ImageIcon image_pacman = null;
+        
+        // Image du pacman depend de sa direction alors pour ca on fait un switch selon la direction
+        
         switch (controller.get_pacman().getDirection()) {
             case '↑':
                 image_pacman = this.img.image_pacman_up;
@@ -186,6 +219,8 @@ public class Game {
         pacman.setBounds(controller.get_pacman().getPos_X(), controller.get_pacman().getPos_Y(), 40, 40);
         panel.add(pacman, Integer.valueOf(4));
         frame.setVisible(true);
+        
+        // Modifier la direction du pcman selon les touches cliqué par l'utilisateur
         frame.addKeyListener(new KeyListener() {
 	            @Override
 	            public void keyPressed(KeyEvent e) {
@@ -213,8 +248,16 @@ public class Game {
 				}
 	        }
         );
+        
+        
+      //##################### Mettre à jour les éléments du jeu #########################
+        
 	    while (true) {
+	    	
+	    	// Mettre à jour le jeu " partie logique"
 	    	int index = controller.update(actual_direction);
+	    	
+	    	// Modifier l'image de pacman selon sa direction 
 	    	switch (controller.get_pacman().getDirection()) {
 	    		case '↑':
 	    			pacman.setIcon(this.img.image_pacman_up);
@@ -229,12 +272,18 @@ public class Game {
 	    			pacman.setIcon(this.img.image_pacman_left);
 	    			break;
 	    	}
-	    	if (index != -1 && index != -2) {
+	    	
+	    	// Verifier s'il y'a une fruit en contacte avec pacman ; si oui on la supprime
+	    	if (index != -1) {
 	    		JLabel apple = apples.get(index);
 	    		panel.remove(apple);
 	    		apples.remove(index);
 	    	}
-	    	if (apples.size() == 0 || index == -2) {
+	    	
+	    	// Verifier s'il tout les fruits sont mangé par pacman ; si oui on passe au niveau suivant
+	    	if (apples.size() == 0) {
+	    		
+	    		
 	    		Game.set_direction('→');
 	    		frame.setVisible(false);
 	    		frame_reset(frame);
@@ -249,11 +298,16 @@ public class Game {
 	            list_ghosts_label = put_ghosts(panel);
 	            frame.setVisible(true);
 	    	}
+	    	
+	    	// Image du ghost 
+	    	// Parcourir tout les ghosts
 	    	for (int i = 0; i < this.controller.get_ghosts().size(); i++) {
 	    		JLabel lghost = list_ghosts_label.get(i);
 	    		Ghost ghost = this.controller.get_ghosts().get(i);
 	    		this.img.image_ghost = null;
+	    		// verifier si le ghost est non vulnerable
 	    		if (!ghost.is_vulnerable()) {
+	    			// Mettre l'image selon la direction
 		    		switch (ghost.getDirection()) {
 		                case '↑':
 		                	this.img.image_ghost = this.img.image_gost_up;
@@ -269,35 +323,37 @@ public class Game {
 		                    break;
 		            }
 	    		} else {
+	    			// on met l'image du ghost vulnerable
 	    			this.img.image_ghost = this.img.image_gost_vul;
 	    		}
+	    		
+	    		// Mettre à jour l'image du ghost ainsi sa position
 	    		lghost.setIcon(this.img.image_ghost);
 	    		lghost.setBounds(ghost.getPos_X(), ghost.getPos_Y(), 40, 40);
 	    	}
+	    	
+	    	// Mettre la position du label qui represente le pacman 
 	    	pacman.setBounds(controller.get_pacman().getPos_X(), controller.get_pacman().getPos_Y(), 40, 40);
+	    	// Mettre à jour la barre qui contient des informations 
 	    	read_score(barre_info_Score);
-	    	switch(this.controller.get_actual_level()) {
-	    		case 1:
-	    			wait(100);
-	    			break;
-	    		case 2:
-	    			wait(80);
-	    			break;
-	    		case 3:
-	    			wait(60);
-	    			break;
-	    		default:
-	    			wait(40);
-	    			break;
-	    	}
-	        
+	    	
+	    	
+	        wait(100);
 	    }
     }
     
+    
+    /**
+     * Modifier la valeur de la variable static 
+     * @param direction La nouvelle valeur
+     */
     private static void set_direction(char direction) {
     	actual_direction = direction;
     }
-    
+    /**
+     * Mettre le programme courant en mode pause
+     * @param ms Le temps d'attend en milliseconde
+     */
     public static void wait(int ms) {
         try {
             Thread.sleep(ms);

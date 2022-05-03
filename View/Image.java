@@ -2,6 +2,11 @@ package View;
 
 import javax.swing.ImageIcon;
 
+/**
+ * 
+ * On charge les images du jeu dans la classe Image afin d'organiser le code dans la classe Game 
+ *
+ */
 public class Image {
 	
 	public ImageIcon image_pacman_left = new ImageIcon("View/Icon/3.gif");
