@@ -9,47 +9,47 @@ public class Controller {
 	 * Numéro du niveau actuel.
 	 */
 	private int actual_level;
-	
+
 	/**
 	 * Numéro du dernier Niveau.
 	 */
 	private int max_level;
-	
+
 	/**
 	 * Liste contenant tous les murs du plateau à initialiser.
 	 */
 	private Liste<Walls> list_walls;
-	
+
 	/**
 	 * Liste contenant tous les murs et téléporteurs à initialiser qui doivent empêcher les fantômes.
 	 */
 	private Liste<Walls> list_ghost_walls;
-	
+
 	/**
 	 * Liste contenant tous les fruits du plateau à initialiser.
 	 */
 	private Liste<Fruits> list_fruits;
-	
+
 	/**
 	 * Liste contenant tous les fantômes du plateau à initialiser.
 	 */
 	private Liste<Ghost> list_ghosts;
-	
+
 	/**
 	 * Liste des téléporteurs du plateau à initialiser.
 	 */
 	private Liste<Telep> list_telep;
-	
+
 	/**
 	 * Liste des plateaux du jeu.
 	 */
 	private Liste<Board> list_boards;
-	
+
 	/**
 	 * Instance de Pacman du plateau à initialiser.
 	 */
 	private Pacman pacman;
-	
+
 	/**
 	 * Constructeur.
 	 */
@@ -88,7 +88,7 @@ public class Controller {
 		this.list_boards = list_boards;
 		this.pacman = pacman;
 	}
-	
+
 	/**
 	 * Copie d'une liste de fruits.
 	 * @param list_fruits Liste de fruits à copier.
@@ -107,7 +107,7 @@ public class Controller {
 		}
 		return tmp_list_fruits;
 	}
-	
+
 	/**
 	 * Copie d'une liste de fantômes.
 	 * @param list_ghosts Liste de fantômes à copier.
@@ -126,7 +126,7 @@ public class Controller {
 		}
 		return tmp_list_ghosts;
 	}
-	
+
 	/**
 	 * Mise à jour des données à exploiter du controlleur pour charger le niveau suivant:
 	 * -Détermine le niveau actuel
@@ -169,7 +169,7 @@ public class Controller {
 		this.pacman.set_Pos_x(Pos_X);
 		this.pacman.set_Pos_y(Pos_Y);
 	}
-	
+
 	/**
 	 * Déplace Pacman dans la direction voulue si possible ou sinon pacman continuera à suivre la même direction.
 	 * @param direction Direction voulue.
@@ -197,7 +197,7 @@ public class Controller {
 				break;
 		}
 	}
-	
+
 	/**
 	 * Détermine les directions que peut prendre un certain fantôme.
 	 * @param ghost Fantôme.
@@ -222,7 +222,7 @@ public class Controller {
 		}
 		return list_char_base;
 	}
-	
+
 	/**
 	 * Détermine si une direction est dans une liste de directions
 	 * @param direction Direction représenté par un char.
@@ -237,7 +237,7 @@ public class Controller {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Fait mouvoir les fantômes de manière aléatoire en respectant des règles:
 	 * -Si le fantôme est dans un couloir (ne peut que avancer ou reculer), il doit garder sa direction de déplacement hormis s'il ne suit pas déjà le couloir (direction vers un mur).
@@ -310,7 +310,7 @@ public class Controller {
 			this.pacman.set_combo(0);
 		}
 	}
-	
+
 	/**
 	 * Enlève un fruit de la liste des fruits.
 	 * @param fruit Fruit à retirer de la liste.
@@ -326,7 +326,7 @@ public class Controller {
 		}
 		return -1;
 	}
-	
+
 	/**
 	 * Détermine si tous les fruits ont été consommés.
 	 * @return Renvoie true si tous les fruits sont consommés, false sinon.
@@ -334,7 +334,7 @@ public class Controller {
 	private boolean all_fruits_are_consumed() {
 		return (this.list_fruits.size() == 0);
 	}
-	
+
 	/**
 	 * Incrément le score selon le fruit mangé.
 	 * Si Pacman a consommé la super-gomme, les fantômes deviennent vulnérables.
@@ -358,7 +358,7 @@ public class Controller {
 		}
 		return index;
 	}
-	
+
 	/**
 	 * Détermine le comportement en cas de contact de Pacman avec un fantôme:
 	 * Si pacman touche un fantôme et que ce fantôme est vulnérable, le score est incrémenté, le fantôme est téléporté à sa position initiale et son temps de vulnérabilité est mise à 0.
@@ -393,7 +393,7 @@ public class Controller {
 			}
 		}
 	}
-	
+
 	/**
 	 * Renvoie le numéro du niveau actuel pour l'affichage.
 	 * @return Numéro du niveau actuel.
@@ -401,7 +401,7 @@ public class Controller {
 	public int get_actual_level() {
 		return this.actual_level;
 	}
-	
+
 	/**
 	 * Renvoie le score pour l'affichage.
 	 * @return Score actuel.
@@ -409,7 +409,7 @@ public class Controller {
 	public int get_score() {
 		return this.pacman.getScore();
 	}
-	
+
 	/**
 	 * Renvoie le nombre de vies pour l'affichage.
 	 * @return Le nombre de vies.
@@ -417,7 +417,7 @@ public class Controller {
 	public int get_point_vie() {
 		return this.pacman.getPoints_vie();
 	}
-	
+
 	/**
 	 * Renvoie la liste des murs pour l'affichage.
 	 * @return La liste des murs du niveau actuel.
@@ -425,7 +425,7 @@ public class Controller {
 	public Liste<Walls> get_walls() {
 		return this.list_walls;
 	}
-	
+
 	/**
 	 * Renvoie la liste des fruits pour l'affichage.
 	 * @return La liste des fruits du niveau actuel.
@@ -433,7 +433,7 @@ public class Controller {
 	public Liste<Fruits> get_fruits() {
 		return this.list_fruits;
 	}
-	
+
 	/**
 	 * Renvoie la liste des fantômes pour l'affichage.
 	 * @return La liste des fantômes du niveau actuel.
@@ -441,15 +441,15 @@ public class Controller {
 	public Liste<Ghost> get_ghosts() {
 		return this.list_ghosts;
 	}
-	
+
 	/**
 	 * Renvoie la liste des téléporteurs pour l'affichage.
-	 * @return La liste des téléporteurs  du niveau actuel.
+	 * @return La liste des téléporteurs du niveau actuel.
 	 */
 	public Liste<Telep> get_telep() {
 		return this.list_telep;
 	}
-	
+
 	/**
 	 * Renvoie une instance de Pacman, utile pour initialiser un premier pacman ou pour lire la position initial du pacman à placer à l'affichage.
 	 * @return Une instance de Pacman.
@@ -457,7 +457,7 @@ public class Controller {
 	public Pacman get_pacman() {
 		return this.pacman;
 	}
-	
+
 	/**
 	 * Met à jour les données exploitables par l'affichage à chaque étape:<br>
 	 * -Déplace Pacman<br>

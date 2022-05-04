@@ -8,7 +8,6 @@ import javax.swing.ImageIcon;
  *
  */
 public class Image {
-	
 	public ImageIcon image_pacman_left = new ImageIcon("View/Icon/3.gif");
 	public ImageIcon image_pacman_up = new ImageIcon("View/Icon/4.gif");
 	public ImageIcon image_pacman_down = new ImageIcon("View/Icon/2.gif");

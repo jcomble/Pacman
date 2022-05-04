@@ -2,9 +2,7 @@ package View;
 
 public class Main {
 	
-    public static void main(String[] args) {
-    	
-    	// Lancer le jeu 
-    	new Game();
-    }
+	public static void main(String[] args) {
+		new Game();
+	}
 }

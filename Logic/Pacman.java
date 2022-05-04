@@ -6,47 +6,47 @@ public class Pacman implements Colision, Movement, Score {
 	 * Abscisse de la position initiale de Pacman.
 	 */
 	private int init_pos_X;
-	
+
 	/**
 	 * Ordonnée de la position initiale de Pacman.
 	 */
 	private int init_pos_Y;
-	
+
 	/**
 	 * Abscisse de la position actuelle de Pacman.
 	 */
 	private int pos_X;
-	
+
 	/**
 	 * Ordonnée de la position actuelle de Pacman.
 	 */
 	private int pos_Y;
-	
+
 	/**
 	 * Nombre de points de vie.
 	 */
 	private int points_Vie;
-	
+
 	/**
 	 * Score du jeu.
 	 */
 	private int score;
-	
+
 	/**
 	 * Caractère flèche représentant la direction de déplacement.
 	 */
 	private char direction;
-	
+
 	/**
 	 * Combos.
 	 */
 	private int combo;
-	
+
 	/**
 	 * Vitesse de déplacement de Pacman en pixels/frame.
 	 */
 	private int speed;
-	
+
 	/**
 	 * Constructeur. La vitesse de Pacman sera toujours inférieur ou égal à 40 pixels/frame (déplacement d'un carreau/frame)
 	 * @param speed Vitesse de déplacement de Pacman en pixels/frame.
@@ -64,7 +64,7 @@ public class Pacman implements Colision, Movement, Score {
 		this.direction = '→';
 		this.speed = Math.max(0, Math.min(40, speed));
 	}
-	
+
 	/**
 	 * Renvoie l'abscisse de la position actuelle de Pacman.
 	 * @return Abscisse de la position actuelle de Pacman.
@@ -72,7 +72,7 @@ public class Pacman implements Colision, Movement, Score {
 	public int getPos_X() {
 		return this.pos_X;
 	}
-	
+
 	/**
 	 * Renvoie l'ordonnée de la position actuelle de Pacman.
 	 * @return Ordonnée de la position actuelle de Pacman.
@@ -80,7 +80,7 @@ public class Pacman implements Colision, Movement, Score {
 	public int getPos_Y() {
 		return this.pos_Y;
 	}
-	
+
 	/**
 	 * Renvoie l'abscisse de la position initiale de Pacman.
 	 * @return Abscisse de la position initiale de Pacman.
@@ -88,7 +88,7 @@ public class Pacman implements Colision, Movement, Score {
 	public int get_init_Pos_X() {
 		return this.init_pos_X;
 	}
-	
+
 	/**
 	 * Renvoie l'ordonnée de la position initiale de Pacman.
 	 * @return Ordonnée de la position initiale de Pacman.
@@ -96,7 +96,7 @@ public class Pacman implements Colision, Movement, Score {
 	public int get_init_Pos_Y() {
 		return this.init_pos_Y;
 	}
-	
+
 	/**
 	 * Renvoie le nombre de vie de Pacman.
 	 * @return Nombre de vie de Pacman.
@@ -105,7 +105,7 @@ public class Pacman implements Colision, Movement, Score {
 	public int getPoints_vie() {
 		return this.points_Vie;
 	}
-	
+
 	/**
 	 * Renvoie le score actuel.
 	 * @return Score actuel.
@@ -114,7 +114,7 @@ public class Pacman implements Colision, Movement, Score {
 	public int getScore() {
 		return this.score;
 	}
-	
+
 	/**
 	 * Renvoie la direction de déplacement actuelle de Pacman.
 	 * @return Le caractère flèche correspondant à la direction de déplacement actuelle de Pacman.
@@ -122,7 +122,7 @@ public class Pacman implements Colision, Movement, Score {
 	public char getDirection() {
 		return this.direction;
 	}
-	
+
 	/**
 	 * Renvoie la vitesse de déplacement de Pacman en pixels/frame.
 	 * @return Vitesse de déplacement de Pacman.
@@ -130,7 +130,7 @@ public class Pacman implements Colision, Movement, Score {
 	public int get_speed() {
 		return this.speed;
 	}
-	
+
 	/**
 	 * Renvoie le nombre de fantômes mangés d'affilé après avoir mangé une super-gomme.
 	 * @return Score de combo.
@@ -138,7 +138,7 @@ public class Pacman implements Colision, Movement, Score {
 	public int get_combo() {
 		return this.combo;
 	}
-	
+
 	/**
 	 * Détermine si la direction de déplacement permet un déplacement de Pacman.
 	 * @param list_walls Liste des murs du plateau.
@@ -149,7 +149,146 @@ public class Pacman implements Colision, Movement, Score {
 	public boolean is_valid_move(char direction, Liste<Walls> list_walls) {
 		return (max_distance(direction, list_walls) != 0); 
 	}
-	
+
+	/**
+	 * Détermine la distance de Pacman avec un mur idéal placé pour bloquer Pacman dans la direction voulue.
+	 * @param direction Direction actuelle de déplacement de Pacman représenté par un caractère flèche.
+	 * @return Distance de Pacman avec le mur idéal.
+	 */
+	private int distance_ideal_wall(char direction) {
+		switch (direction) {
+			case '↑':
+				return pos_Y % 40;
+			case '↓':
+				return (40 - pos_Y % 40) % 40;
+			case '→':
+				return (40 - pos_X % 40) % 40;
+			case '←':
+				return pos_X % 40;
+		}
+		return 0;
+	}
+
+	/**
+	 * Abscisse de la position du mur idéal pour bloquer Pacman dans la direction voulue<br>
+	 * si Pacman est aligné avec une ligne ou une colonne selon la direction prise.
+	 * @param direction Direction actuelle de déplacement de Pacman représenté par un caractère flèche.
+	 * @return Abscisse de la position du mur idéal pour bloquer Pacman dans la direction voulue.
+	 */
+	private int ideal_wall_Pos_x(char direction) {
+		switch (direction) {
+			case '↑':
+				return this.pos_X;
+			case '↓':
+				return this.pos_X;
+			case '←':
+				return this.pos_X - this.pos_X % 40 - 40;
+			case '→':
+				return this.pos_X + 40 + (40 - this.pos_X % 40) % 40;
+		}
+		return 0;
+	}
+
+	/**
+	 * Ordonnée de la position du mur idéal pour bloquer Pacman dans la direction voulue<br>
+	 * si Pacman est aligné avec une ligne ou une colonne selon la direction prise.
+	 * @param direction Direction actuelle de déplacement de Pacman représenté par un caractère flèche.
+	 * @return Ordonnée de la position du mur idéal pour bloquer Pacman dans la direction voulue.
+	 */
+	private int ideal_wall_Pos_y(char direction) {
+		switch (direction) {
+			case '↑':
+				return pos_Y - pos_Y % 40 - 40;
+			case '↓':
+				return pos_Y + 40 + (40 - pos_Y % 40) % 40;
+			case '←':
+				return pos_Y;
+			case '→':
+				return pos_Y;
+		}
+		return 0;
+	}
+
+	/**
+	 * Abscisse de la position du premier mur idéal pour bloquer Pacman dans la direction voulue<br>
+	 * si Pacman n'est pas aligné avec une ligne ou une colonne selon la direction prise.
+	 * @param direction Direction actuelle de déplacement de Pacman représenté par un caractère flèche.
+	 * @return Abscisse de la position du premier mur idéal pour bloquer Pacman dans la direction voulue.
+	 */
+	private int ideal_wall_Pos_x1(char direction) {
+		switch (direction) {
+			case '↑':
+				return this.pos_X - this.pos_X % 40;
+			case '↓':
+				return this.pos_X - this.pos_X % 40;
+			case '←':
+				return this.pos_X - this.pos_X % 40 - 40;
+			case '→':
+				return this.pos_X + 40 + (40 - this.pos_X % 40) % 40;
+		}
+		return 0;
+	}
+
+	/**
+	 * Ordonnée de la position du premier mur idéal pour bloquer Pacman dans la direction voulue<br>
+	 * si Pacman n'est pas aligné avec une ligne ou une colonne selon la direction prise.
+	 * @param direction Direction actuelle de déplacement de Pacman représenté par un caractère flèche.
+	 * @return Ordonnée de la position du premier mur idéal pour bloquer Pacman dans la direction voulue.
+	 */
+	private int ideal_wall_Pos_y1(char direction) {
+		switch (direction) {
+			case '↑':
+				return this.pos_Y - this.pos_Y % 40 - 40;
+			case '↓':
+				return this.pos_Y + 40 + (40 - this.pos_Y % 40) % 40;
+			case '←':
+				return this.pos_Y - this.pos_Y % 40;
+			case '→':
+				return this.pos_Y - this.pos_Y % 40;
+		}
+		return 0;
+	}
+
+	/**
+	 * Abscisse de la position du second mur idéal pour bloquer Pacman dans la direction voulue<br>
+	 * si Pacman n'est pas aligné avec une ligne ou une colonne selon la direction prise.
+	 * @param direction Direction actuelle de déplacement de Pacman représenté par un caractère flèche.
+	 * @return Abscisse de la position du second mur idéal pour bloquer Pacman dans la direction voulue.
+	 */
+	private int ideal_wall_Pos_x2(char direction) {
+		switch (direction) {
+			case '↑':
+				return this.pos_X - this.pos_X % 40 + 40;
+			case '↓':
+				return this.pos_X - this.pos_X % 40 + 40;
+			case '←':
+				return this.pos_X - this.pos_X % 40 - 40;
+			case '→':
+				return this.pos_X + 40 + (40 - this.pos_X % 40) % 40;
+		}
+		return 0;
+	}
+
+	/**
+	 * Ordonnée de la position du second mur idéal pour bloquer Pacman dans la direction voulue<br>
+	 * si Pacman n'est pas aligné avec une ligne ou une colonne selon la direction prise.
+	 * @param direction Direction actuelle de déplacement de Pacman représenté par un caractère flèche.
+	 * @return Ordonnée de la position du second mur idéal pour bloquer Pacman dans la direction voulue.
+	 */
+	private int ideal_wall_Pos_y2(char direction) {
+		switch (direction) {
+			case '↑':
+				return this.pos_Y - this.pos_Y % 40 - 40;
+			case '↓':
+				return this.pos_Y + 40 + (40 - this.pos_Y % 40) % 40;
+			case '←':
+				return this.pos_Y - this.pos_Y % 40 + 40;
+			case '→':
+				return this.pos_Y - this.pos_Y % 40 + 40;
+		}
+		return 0;
+	}
+
 	/**
 	 * Détermine la distance maximale parcourable en une frame en fonction de la vitesse de déplacement de Pacman, la direction de déplacement et les murs à proximité.
 	 * @param direction Direction actuelle de déplacement de Pacman.
@@ -158,59 +297,19 @@ public class Pacman implements Colision, Movement, Score {
 	 */
 	public int max_distance(char direction, Liste<Walls> list_walls) {
 		int length_list = list_walls.size();
-		int ideal_wall_x = 0;
-		int ideal_wall_y = 0;
-		int ideal_wall_x1 = 0;
-		int ideal_wall_y1 = 0;
-		int ideal_wall_x2 = 0;
-		int ideal_wall_y2 = 0;
-		int pos_X = this.pos_X;
-		int pos_Y = this.pos_Y;
+		int ideal_wall_x = ideal_wall_Pos_x(direction);
+		int ideal_wall_y = ideal_wall_Pos_y(direction);
+		int ideal_wall_x1 = ideal_wall_Pos_x1(direction);
+		int ideal_wall_y1 = ideal_wall_Pos_y1(direction);
+		int ideal_wall_x2 = ideal_wall_Pos_x2(direction);
+		int ideal_wall_y2 = ideal_wall_Pos_y2(direction);
 		int speed = this.speed;
 		int alignement = 0;
-		int distance = 0;
+		int distance = distance_ideal_wall(direction);
 		if (direction == '↑' || direction == '↓') {
 			alignement = pos_X % 40;
 		} else {
 			alignement = pos_Y % 40;
-		}
-		switch (direction) {
-			case '↑':
-				ideal_wall_x = pos_X;
-				ideal_wall_y = pos_Y - pos_Y % 40 - 40;
-				ideal_wall_x1 = pos_X - pos_X % 40;
-				ideal_wall_y1 = pos_Y - pos_Y % 40 - 40;
-				ideal_wall_x2 = pos_X - pos_X % 40 + 40;
-				ideal_wall_y2 = pos_Y - pos_Y % 40 - 40;
-				distance = pos_Y % 40;
-				break;
-			case '↓':
-				ideal_wall_x = pos_X;
-				ideal_wall_y = pos_Y + 40 + (40 - pos_Y % 40) % 40;
-				ideal_wall_x1 = pos_X - pos_X % 40;
-				ideal_wall_y1 = pos_Y + 40 + (40 - pos_Y % 40) % 40;
-				ideal_wall_x2 = pos_X - pos_X % 40 + 40;
-				ideal_wall_y2 = pos_Y + 40 + (40 - pos_Y % 40) % 40;
-				distance = (40 - pos_Y % 40) % 40;
-				break;
-			case '←':
-				ideal_wall_x = pos_X - pos_X % 40 - 40;
-				ideal_wall_y = pos_Y;
-				ideal_wall_x1 = pos_X - pos_X % 40 - 40;
-				ideal_wall_y1 = pos_Y - pos_Y % 40;
-				ideal_wall_x2 = pos_X - pos_X % 40 - 40;
-				ideal_wall_y2 = pos_Y - pos_Y % 40 + 40;
-				distance = pos_X % 40;
-				break;
-			case '→':
-				ideal_wall_x = pos_X + 40 + (40 - pos_X % 40) % 40;
-				ideal_wall_y = pos_Y;
-				ideal_wall_x1 = pos_X + 40 + (40 - pos_X % 40) % 40;
-				ideal_wall_y1 = pos_Y - pos_Y % 40;
-				ideal_wall_x2 = pos_X + 40 + (40 - pos_X % 40) % 40;
-				ideal_wall_y2 = pos_Y - pos_Y % 40 + 40;
-				distance = (40 - pos_X % 40) % 40;
-				break;
 		}
 		switch (alignement) {
 			case 0:
@@ -236,7 +335,7 @@ public class Pacman implements Colision, Movement, Score {
 		}
 		return speed;
 	}
-	
+
 	/**
 	 * Détermine la distance entre deux points.
 	 * @param x_1 Abscisse du point 1.
@@ -248,7 +347,7 @@ public class Pacman implements Colision, Movement, Score {
 	private double distance(int x_1, int y_1, int x_2, int y_2) {
 		return Math.sqrt(Math.pow(x_2 - x_1, 2) + Math.pow(y_2 - y_1, 2));
 	}
-	
+
 	/**
 	 * Détermine si Pacman est en contact avec un fantôme.
 	 * @param list_ghosts Liste des fantômes du plateau.
@@ -269,7 +368,7 @@ public class Pacman implements Colision, Movement, Score {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Détermine si Pacman est en contact avec un fruit.
 	 * @param list_fruits Liste des fruits du plateau.
@@ -290,7 +389,7 @@ public class Pacman implements Colision, Movement, Score {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Détermine si Pacman est en contact avec un téléporteur.
 	 * @param list_telep Liste des téléporteurs du jeu.
@@ -317,7 +416,7 @@ public class Pacman implements Colision, Movement, Score {
 					d_2 = distance(x_1 + speed, y_1, x_2, y_2);
 					break;
 				case '←':
-					d_2 = distance(x_1 - speed, y_1,  x_2, y_2);
+					d_2 = distance(x_1 - speed, y_1, x_2, y_2);
 					break;
 			}
 			if (d_1 < 40.0 && d_2 < d_1 || d_1 == 0.0) {
@@ -341,7 +440,7 @@ public class Pacman implements Colision, Movement, Score {
 			}
 		}
 	}
-	
+
 	/**
 	 * Détermine si Pacman est définitivement mort.
 	 * @return Renvoie la véracité de la mort de Pacman.
@@ -350,7 +449,7 @@ public class Pacman implements Colision, Movement, Score {
 	public boolean is_Dead() {
 		return (getPoints_vie() == 0);
 	}
-	
+
 	/**
 	 * Redéfinit l'abscisse de la position actuelle de Pacman.
 	 * @param x Abscisse de la position actuelle de Pacman.
@@ -359,7 +458,7 @@ public class Pacman implements Colision, Movement, Score {
 	public void set_Pos_x(int x) {
 		this.pos_X = x;
 	}
-	
+
 	/**
 	 * Redéfinit l'ordonnée de la position actuelle de Pacman.
 	 * @param y Ordonnée de la position actuelle de Pacman.
@@ -368,7 +467,7 @@ public class Pacman implements Colision, Movement, Score {
 	public void set_Pos_y(int y) {
 		this.pos_Y = y;
 	}
-	
+
 	/**
 	 * Redéfinit l'abscisse de la position initiale de Pacman.
 	 * @param x Abscisse de la position initiale de Pacman.
@@ -376,7 +475,7 @@ public class Pacman implements Colision, Movement, Score {
 	public void set_init_Pos_x(int x) {
 		this.init_pos_X = x;
 	}
-	
+
 	/**
 	 * Redéfinit l'ordonnée de la position initiale de Pacman.
 	 * @param y Ordonnée de la position initiale de Pacman.
@@ -384,7 +483,7 @@ public class Pacman implements Colision, Movement, Score {
 	public void set_init_Pos_y(int y) {
 		this.init_pos_Y = y;
 	}
-	
+
 	/**
 	 * Redéfinit le nombre de point de vies de Pacman.
 	 * @param number_lives Nombre de point de vies.
@@ -393,7 +492,7 @@ public class Pacman implements Colision, Movement, Score {
 	public void set_Points_Vie(int number_lives) {
 		this.points_Vie = number_lives;
 	}
-	
+
 	/**
 	 * Redéfinit le score du jeu.
 	 * @param score Valeur de score.
@@ -402,7 +501,7 @@ public class Pacman implements Colision, Movement, Score {
 	public void set_Score(int score) {
 		this.score = score;
 	}
-	
+
 	/**
 	 * Redéfinit la direction actuelle de déplacement de Pacman.
 	 * @param direction Nouvelle sirection de déplacement de Pacman.
@@ -410,16 +509,16 @@ public class Pacman implements Colision, Movement, Score {
 	public void set_Direction(char direction) {
 		this.direction = direction;
 	}
-	
+
 	/**
-	 * Redéfinit la vitesse de déplacement du fantôme.
-	 * @param speed Vitesse de déplacement du fantôme en pixels/frame.
+	 * Redéfinit la vitesse de déplacement de Pacman.
+	 * @param speed Vitesse de déplacement de Pacman en pixels/frame.
 	 */
 	@Override
 	public void set_speed(int speed) {
 		this.speed = speed;
 	}
-	
+
 	/**
 	 * Redéfinit le score de combo.
 	 * @param combo Score de combo.
@@ -427,7 +526,7 @@ public class Pacman implements Colision, Movement, Score {
 	public void set_combo(int combo) {
 		this.combo = combo;
 	}
-	
+
 	/**
 	 * Incrémente le score du jeu et le nombre de vie de 1 à chaque tranche de 10000 points.
 	 * @param number_score Valeur de l'incrément.
@@ -439,7 +538,7 @@ public class Pacman implements Colision, Movement, Score {
 		this.points_Vie += new_score / 10000 - last_score / 10000;
 		this.score = new_score;
 	}
-	
+
 	/**
 	 * Incrémente le nombre de vie de Pacman de 1.
 	 */
@@ -447,7 +546,7 @@ public class Pacman implements Colision, Movement, Score {
 	public void inc_Points_vie() {
 		this.points_Vie += 1;
 	}
-	
+
 	/**
 	 * Décrémente le nombre de vie de Pacman de 1.
 	 */
@@ -455,7 +554,7 @@ public class Pacman implements Colision, Movement, Score {
 	public void dec_Points_vie() {
 		this.points_Vie -= 1;
 	}
-	
+
 	/**
 	 * Déplace Pacman vers le haut si possible.
 	 * @param list_walls Liste des murs du plateau.
@@ -467,7 +566,7 @@ public class Pacman implements Colision, Movement, Score {
 			this.pos_Y -= tmp_d;
 		}
 	}
-	
+
 	/**
 	 * Déplace Pacman vers le bas si possible.
 	 * @param list_walls Liste des murs du plateau.
@@ -479,6 +578,7 @@ public class Pacman implements Colision, Movement, Score {
 			this.pos_Y += tmp_d;
 		}
 	}
+
 	/**
 	 * Déplace Pacman vers la gauche si possible.
 	 * @param list_walls Liste des murs du plateau.
@@ -490,7 +590,7 @@ public class Pacman implements Colision, Movement, Score {
 			this.pos_X -=tmp_d;
 		}
 	}
-	
+
 	/**
 	 * Déplace Pacman vers la droite si possible.
 	 * @param list_walls Liste des murs du plateau.
@@ -502,7 +602,7 @@ public class Pacman implements Colision, Movement, Score {
 			this.pos_X += tmp_d;
 		}
 	}
-	
+
 	/**
 	 * Détermine si Pacman est en contact avec un fantôme.
 	 * @param list_ghosts Liste des fantômes du plateau.
@@ -522,24 +622,24 @@ public class Pacman implements Colision, Movement, Score {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Détermine si Pacman est en contact avec un fruit.
 	 * @param list_fruits Liste des fruits du plateau.
 	 * @return Renvoie le fruit en contact avec Pacman, null si échéant.
 	 */
 	public Fruits touched_Fruit(Liste<Fruits> list_fruits) {
-        int length = list_fruits.size();
-        for (int i = 0; i < length; i++) {
-            Fruits tmp_fruits = list_fruits.get(i);
-            int x_1 = this.pos_X;
-            int y_1 = this.pos_Y;
-            int x_2 = tmp_fruits.getPos_X();
-            int y_2 = tmp_fruits.getPos_Y();
-            if (distance(x_1, y_1, x_2, y_2) < 40.0) {
-                return tmp_fruits;
-            }
-        }
-        return null;
-    }
+		int length = list_fruits.size();
+		for (int i = 0; i < length; i++) {
+			Fruits tmp_fruits = list_fruits.get(i);
+			int x_1 = this.pos_X;
+			int y_1 = this.pos_Y;
+			int x_2 = tmp_fruits.getPos_X();
+			int y_2 = tmp_fruits.getPos_Y();
+			if (distance(x_1, y_1, x_2, y_2) < 40.0) {
+				return tmp_fruits;
+			}
+		}
+		return null;
+	}
 }

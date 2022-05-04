@@ -5,14 +5,14 @@ public class Liste<Type> {
 	 * Tête de la liste.
 	 */
 	private Node<Type> Heap;
-	
+
 	/**
 	 * Constructeur de la liste doublement chaînée.
 	 */
 	public Liste() {
 		this.Heap = null;
 	}
-	
+
 	/**
 	 * Ajout d'un élément dans la liste à la fin.
 	 * @param element Nouvel élément de la liste.
@@ -31,7 +31,7 @@ public class Liste<Type> {
 			last_note.set_next(tmp_node);
 		}
 	}
-	
+
 	/**
 	 * Détermine la taille de la liste.
 	 * @return Taille de la liste.
@@ -48,7 +48,7 @@ public class Liste<Type> {
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * Retrait d'un élément dans la liste à la fin.
 	 * @param index Index de l'élément à retirer de la liste.
@@ -78,7 +78,7 @@ public class Liste<Type> {
 			}
 		}
 	}
-	
+
 	/**
 	 * Détermine l'élément de la liste par son index.
 	 * @param index Index de la liste.

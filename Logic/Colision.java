@@ -8,14 +8,14 @@ public interface Colision {
 	 * @return true si Pacman est en contact avec au moins un fantôme, false sinon.
 	 */
 	public boolean is_touching_Ghost(Liste<Ghost> list_ghosts);
-	
+
 	/**
 	 * Détermine si Pacman est en contact avec un fruit.
 	 * @param list_fruits Liste des fruits du plateau.
 	 * @return true si Pacman est en contact avec un fruit, false sinon.
 	 */
 	public boolean is_touching_Fruit(Liste<Fruits> list_fruits);
-	
+
 	/**
 	 * Détermine le fruit en contact avec Pacman.
 	 * @param list_fruits Liste des fruits du plateau.

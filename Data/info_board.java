@@ -12,7 +12,7 @@ public interface info_board {
 	 * @param y ordonnée de la position initiale
 	 */
 	public void put_Pacman(Pacman pacman, int x, int y);
-	
+
 	/**
 	 * Place le fantôme à une position du plateau.
 	 * @param ghost Objet représentant le fantôme
@@ -20,7 +20,7 @@ public interface info_board {
 	 * @param y ordonnée de la position initiale
 	 */
 	public void put_Ghost(Ghost ghost, int x, int y);
-	
+
 	/**
 	 * Place le fruit à une position du plateau.
 	 * @param fruit Objet représentant le fruit
@@ -28,7 +28,7 @@ public interface info_board {
 	 * @param y ordonnée de la position initiale
 	 */
 	public void put_Fruit(Fruits fruit, int x, int y);
-	
+
 	/**
 	 * Renvoie le nombre de fruits restant.
 	 * @return Entier représentant le nombre de fruit restant

@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import javax.swing.JFrame;
 
-
 /*
  * 
  * 
@@ -32,9 +31,9 @@ import javax.swing.JFrame;
  */
 
 public class Frame extends JFrame {
-		
+
 	private static final long serialVersionUID = 1L;
-	
+
 	public Frame() {
 		// Metter icon au fram
 		Image inst_img=new Image();
@@ -43,13 +42,13 @@ public class Frame extends JFrame {
 		// Mettre le titre
 		this.setTitle("PACMAN_GR_6_TP2");
 		// Fermer le programme quand la fenetre se ferme
-        this.setDefaultCloseOperation(Frame.EXIT_ON_CLOSE);
-        this.setLayout(null);
-        // Les dimension du fenetre sont inchangable
-        this.setResizable(false);
-        // Definir les dimensions du frame
-        this.setSize(1000, 960);
-        // Definir la coleur du background
-        this.getContentPane().setBackground(Color.black);
+		this.setDefaultCloseOperation(Frame.EXIT_ON_CLOSE);
+		this.setLayout(null);
+		// Les dimension du fenetre sont inchangable
+		this.setResizable(false);
+		// Definir les dimensions du frame
+		this.setSize(1000, 960);
+		// Definir la coleur du background
+		this.getContentPane().setBackground(Color.black);
 	}
 }
