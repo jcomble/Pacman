@@ -13,14 +13,7 @@ import Logic.Controller;
 import Logic.Fruits;
 import Logic.Ghost;
 
-
-/**
- * 
- * 
- *
- */
 public class Game {
-	
 	
 	/**
 	 * La direction du pacman 
@@ -35,10 +28,6 @@ public class Game {
 	 * Tout les objets Type ImageIcon sont dans l'attribut img à l'aide de la classe Image (pour organier le code )
 	 */
 	private Image img = new Image();	
-	
-	
-	
-	
 	
 	/**
 	 * Associer à une label les informations du jeu
@@ -88,11 +77,39 @@ public class Game {
 			int pos_x = this.controller.get_fruits().get(i).getPos_X();
 			int pos_y = this.controller.get_fruits().get(i).getPos_Y();
 			JLabel apple = new JLabel();
-			if (tmp_fruit.getType() == 'g') {
-				apple.setIcon(this.img.pomme_normal);
-            } else {
-				apple.setIcon(this.img.pomme_super);
-            }
+			switch (tmp_fruit.getType()) {
+				case '.':
+					apple.setIcon(this.img.gomme);
+					break;
+				case '*':
+					apple.setIcon(this.img.super_gomme);
+					break;
+				case 'c':
+					apple.setIcon(this.img.cherry);
+					break;
+				case 'f':
+					apple.setIcon(this.img.strawberry);
+					break;
+				case 'o':
+					apple.setIcon(this.img.orange);
+					break;
+				case 'p':
+					apple.setIcon(this.img.pomme);
+					break;
+				case 'm':
+					apple.setIcon(this.img.mellon);
+					break;
+				case 'g':
+					apple.setIcon(this.img.ship);
+					break;
+				case 'b':
+					apple.setIcon(this.img.bell);
+					break;
+				case 'k':
+					apple.setIcon(this.img.key);
+					break;
+			
+			}
 			apple.setBounds(pos_x, pos_y, 40, 40);
 			apples.add(apple);
 			panel.add(apple, Integer.valueOf(2));
@@ -156,10 +173,7 @@ public class Game {
 	 * Charegement et lancement du jeu 
 	 */
     public Game() {
-    	
     	//##################### Mise en place les éléments du jeu #########################
-    	
-    	
     	// Instancier la classe frame
         Frame frame = new Frame();
         
@@ -253,7 +267,6 @@ public class Game {
       //##################### Mettre à jour les éléments du jeu #########################
         
 	    while (true) {
-	    	
 	    	// Mettre à jour le jeu " partie logique"
 	    	int index = controller.update(actual_direction);
 	    	
@@ -274,16 +287,14 @@ public class Game {
 	    	}
 	    	
 	    	// Verifier s'il y'a une fruit en contacte avec pacman ; si oui on la supprime
-	    	if (index != -1) {
+	    	if (index != -1 && index != -2) {
 	    		JLabel apple = apples.get(index);
 	    		panel.remove(apple);
 	    		apples.remove(index);
 	    	}
 	    	
 	    	// Verifier s'il tout les fruits sont mangé par pacman ; si oui on passe au niveau suivant
-	    	if (apples.size() == 0) {
-	    		
-	    		
+	    	if (apples.size() == 0 || index == -2) {
 	    		Game.set_direction('→');
 	    		frame.setVisible(false);
 	    		frame_reset(frame);
@@ -298,7 +309,6 @@ public class Game {
 	            list_ghosts_label = put_ghosts(panel);
 	            frame.setVisible(true);
 	    	}
-	    	
 	    	// Image du ghost 
 	    	// Parcourir tout les ghosts
 	    	for (int i = 0; i < this.controller.get_ghosts().size(); i++) {
@@ -326,19 +336,29 @@ public class Game {
 	    			// on met l'image du ghost vulnerable
 	    			this.img.image_ghost = this.img.image_gost_vul;
 	    		}
-	    		
 	    		// Mettre à jour l'image du ghost ainsi sa position
 	    		lghost.setIcon(this.img.image_ghost);
 	    		lghost.setBounds(ghost.getPos_X(), ghost.getPos_Y(), 40, 40);
 	    	}
-	    	
 	    	// Mettre la position du label qui represente le pacman 
 	    	pacman.setBounds(controller.get_pacman().getPos_X(), controller.get_pacman().getPos_Y(), 40, 40);
 	    	// Mettre à jour la barre qui contient des informations 
 	    	read_score(barre_info_Score);
+	    	switch (this.controller.get_actual_level()) {
+	    		case 1:
+	    			wait(100);
+	    			break;
+	    		case 2:
+	    			wait(80);
+	    			break;
+	    		case 3:
+	    			wait(60);
+	    			break;
+	    		default:
+	    			wait(40);
+	    			break;
+	    	}
 	    	
-	    	
-	        wait(100);
 	    }
     }
     

@@ -38,6 +38,11 @@ public class Pacman implements Colision, Movement, Score {
 	private char direction;
 	
 	/**
+	 * Combos.
+	 */
+	private int combo;
+	
+	/**
 	 * Vitesse de déplacement de Pacman en pixels/frame.
 	 */
 	private int speed;
@@ -55,6 +60,7 @@ public class Pacman implements Colision, Movement, Score {
 		this.init_pos_Y = pos_y_base;
 		this.points_Vie = 3;
 		this.score = 0;
+		this.combo = 0;
 		this.direction = '→';
 		this.speed = Math.max(0, Math.min(40, speed));
 	}
@@ -123,6 +129,14 @@ public class Pacman implements Colision, Movement, Score {
 	 */
 	public int get_speed() {
 		return this.speed;
+	}
+	
+	/**
+	 * Renvoie le nombre de fantômes mangés d'affilé après avoir mangé une super-gomme.
+	 * @return Score de combo.
+	 */
+	public int get_combo() {
+		return this.combo;
 	}
 	
 	/**
@@ -405,7 +419,15 @@ public class Pacman implements Colision, Movement, Score {
 	public void set_speed(int speed) {
 		this.speed = speed;
 	}
-
+	
+	/**
+	 * Redéfinit le score de combo.
+	 * @param combo Score de combo.
+	 */
+	public void set_combo(int combo) {
+		this.combo = combo;
+	}
+	
 	/**
 	 * Incrémente le score du jeu et le nombre de vie de 1 à chaque tranche de 10000 points.
 	 * @param number_score Valeur de l'incrément.

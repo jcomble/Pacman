@@ -21,8 +21,14 @@ public class Image {
 	public ImageIcon image_gost_up = new ImageIcon("View/Icon/blinky3up.png");
 	public ImageIcon image_gost_down = new ImageIcon("View/Icon/blinky3down.png");
 	public ImageIcon image_gost_vul = new ImageIcon("View/Icon/white4.png");
-	public ImageIcon pomme_normal = new ImageIcon("View/Icon/apple.png");
-	public ImageIcon pomme_super = new ImageIcon("View/Icon/mellon.png");
-	
-	
+	public ImageIcon pomme = new ImageIcon("View/Icon/apple.png");
+	public ImageIcon mellon = new ImageIcon("View/Icon/mellon.png");
+	public ImageIcon bell = new ImageIcon("View/Icon/bell.png");
+	public ImageIcon cherry = new ImageIcon("View/Icon/cherry.png");
+	public ImageIcon key = new ImageIcon("View/Icon/key.png");
+	public ImageIcon orange = new ImageIcon("View/Icon/peach.png");
+	public ImageIcon ship = new ImageIcon("View/Icon/ship.png");
+	public ImageIcon strawberry = new ImageIcon("View/Icon/strawberry.png");
+	public ImageIcon gomme = new ImageIcon("View/Icon/gomme.png");
+	public ImageIcon super_gomme = new ImageIcon("View/Icon/super_gomme.png");
 }

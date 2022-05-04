@@ -248,6 +248,7 @@ public class Controller {
 	private void ghost_random_move() {
 		Random random = new Random();
 		Liste<Ghost> list_ghosts = this.list_ghosts;
+		int count_for_combo = 0;
 		for (int i = 0; i < list_ghosts.size(); i++) {
 			Ghost ghost = list_ghosts.get(i);
 			char[] list_allowed_direction = allowed_direction(ghost);
@@ -300,7 +301,13 @@ public class Controller {
 					ghost.set_Pos_x(new_pos_X);
 					break;
 			}
+			if (!ghost.is_vulnerable()) {
+				count_for_combo += 1;
+			}
 			ghost.dec_vul();
+		}
+		if (count_for_combo == list_ghosts.size()) {
+			this.pacman.set_combo(0);
 		}
 	}
 	
@@ -339,7 +346,8 @@ public class Controller {
 		if (tmp_fruit != null) {
 			int value = tmp_fruit.getValue();
 			this.pacman.inc_Score(value);
-			if (tmp_fruit.getType() == '.') {
+			if (tmp_fruit.getType() == '*') {
+				this.pacman.set_combo(0);
 				Liste<Ghost> list_ghosts = this.list_ghosts;
 				for (int i = 0; i < list_ghosts.size(); i++) {
 					Ghost ghost = list_ghosts.get(i);
@@ -360,7 +368,8 @@ public class Controller {
 		if (tmp_ghost != null) {
 			Pacman pacman = this.pacman;
 			if (tmp_ghost.is_vulnerable()) {
-				pacman.inc_Score(200);
+				pacman.set_combo(pacman.get_combo() + 1);
+				pacman.inc_Score((int) (100 * Math.pow(2, pacman.get_combo())));
 				int Pos_X = tmp_ghost.get_init_Pos_X();
 				int Pos_Y = tmp_ghost.get_init_Pos_Y();
 				tmp_ghost.set_Pos_x(Pos_X);
@@ -470,7 +479,7 @@ public class Controller {
 		if (all_fruits_are_consumed()) {
 			maj_controller();
 		}
-		Ghost tmp_ghost=pacman.touched_Ghost(this.list_ghosts);
+		Ghost tmp_ghost = pacman.touched_Ghost(this.list_ghosts);
 		maj_ghost_pacman(tmp_ghost);
 		if (pacman.is_Dead() && this.actual_level != 5) {
 			this.actual_level = 4;
