@@ -147,19 +147,71 @@ public class Game {
 			list_ghosts_label.add(ghost_label);
 			switch (tmp_ghost.getDirection()) {
 				case '↑':
-					image_ghost = this.img.image_gost_up;
+					switch (i % 4) {
+						case 0:
+							image_ghost = this.img.image_blinky_up;
+							break;
+						case 1:
+							image_ghost = this.img.image_clyde_up;
+							break;
+						case 2:
+							image_ghost = this.img.image_inky_up;
+							break;
+						case 3:
+							image_ghost = this.img.image_pinky_up;
+							break;
+					}
 					ghost_label.setIcon(image_ghost); 
 					break;
 				case '↓':
-					image_ghost = this.img.image_gost_down;
+					switch (i % 4) {
+						case 0:
+							image_ghost = this.img.image_blinky_down;
+							break;
+						case 1:
+							image_ghost = this.img.image_clyde_down;
+							break;
+						case 2:
+							image_ghost = this.img.image_inky_down;
+							break;
+						case 3:
+							image_ghost = this.img.image_pinky_down;
+							break;
+					}
 					ghost_label.setIcon(image_ghost); 
 					break;
 				case '←':
-					image_ghost = this.img.image_gost_left;
+					switch (i % 4) {
+						case 0:
+							image_ghost = this.img.image_blinky_left;
+							break;
+						case 1:
+							image_ghost = this.img.image_clyde_left;
+							break;
+						case 2:
+							image_ghost = this.img.image_inky_left;
+							break;
+						case 3:
+							image_ghost = this.img.image_pinky_left;
+							break;
+					}
 					ghost_label.setIcon(image_ghost); 
 					break;
 				case '→':
-					image_ghost = this.img.image_gost_right;
+					switch (i % 4) {
+						case 0:
+							image_ghost = this.img.image_blinky_right;
+							break;
+						case 1:
+							image_ghost = this.img.image_clyde_right;
+							break;
+						case 2:
+							image_ghost = this.img.image_inky_right;
+							break;
+						case 3:
+							image_ghost = this.img.image_pinky_right;
+							break;
+					}
 					ghost_label.setIcon(image_ghost); 
 					break;
 			}
@@ -254,7 +306,48 @@ public class Game {
 		//##################### Mettre à jour les éléments du jeu #########################
 		while (true) {
 			// Mettre à jour le jeu " partie logique"
-			int index = controller.update(actual_direction);
+			int index = this.controller.update(actual_direction);
+			Fruits tmp_fruit = this.controller.get_bonus();
+			if (tmp_fruit != null) {
+				int pos_x = tmp_fruit.getPos_X();
+				int pos_y = tmp_fruit.getPos_Y();
+				JLabel apple = new JLabel();
+				switch (tmp_fruit.getType()) {
+					case '.':
+						apple.setIcon(this.img.gomme);
+						break;
+					case '*':
+						apple.setIcon(this.img.super_gomme);
+						break;
+					case 'c':
+						apple.setIcon(this.img.cherry);
+						break;
+					case 'f':
+						apple.setIcon(this.img.strawberry);
+						break;
+					case 'o':
+						apple.setIcon(this.img.orange);
+						break;
+					case 'p':
+						apple.setIcon(this.img.pomme);
+						break;
+					case 'm':
+						apple.setIcon(this.img.mellon);
+						break;
+					case 'g':
+						apple.setIcon(this.img.ship);
+						break;
+					case 'b':
+						apple.setIcon(this.img.bell);
+						break;
+					case 'k':
+						apple.setIcon(this.img.key);
+						break;
+				}
+				apple.setBounds(pos_x, pos_y, 40, 40);
+				apples.add(apple);
+				panel.add(apple, Integer.valueOf(2));
+			}
 			// Modifier l'image de pacman selon sa direction 
 			switch (controller.get_pacman().getDirection()) {
 				case '↑':
@@ -274,6 +367,7 @@ public class Game {
 			if (index != -1 && index != -2) {
 				JLabel apple = apples.get(index);
 				panel.remove(apple);
+				panel.repaint();
 				apples.remove(index);
 			}
 			// Verifier s'il tout les fruits sont mangé par pacman ; si oui on passe au niveau suivant
@@ -303,16 +397,72 @@ public class Game {
 					// Mettre l'image selon la direction
 					switch (ghost.getDirection()) {
 						case '↑':
-							this.img.image_ghost = this.img.image_gost_up;
+							switch (i % 4) {
+								case 0:
+									this.img.image_ghost = this.img.image_blinky_up;
+									break;
+								case 1:
+									this.img.image_ghost = this.img.image_clyde_up;
+									break;
+								case 2:
+									this.img.image_ghost = this.img.image_inky_up;
+									break;
+								case 3:
+									this.img.image_ghost = this.img.image_pinky_up;
+									break;
+							}
+							lghost.setIcon(this.img.image_ghost); 
 							break;
 						case '↓':
-							this.img.image_ghost = this.img.image_gost_down;
+							switch (i % 4) {
+								case 0:
+									this.img.image_ghost = this.img.image_blinky_down;
+									break;
+								case 1:
+									this.img.image_ghost = this.img.image_clyde_down;
+									break;
+								case 2:
+									this.img.image_ghost = this.img.image_inky_down;
+									break;
+								case 3:
+									this.img.image_ghost = this.img.image_pinky_down;
+									break;
+							}
+							lghost.setIcon(this.img.image_ghost); 
 							break;
 						case '←':
-							this.img.image_ghost = this.img.image_gost_left;
+							switch (i % 4) {
+								case 0:
+									this.img.image_ghost = this.img.image_blinky_left;
+									break;
+								case 1:
+									this.img.image_ghost = this.img.image_clyde_left;
+									break;
+								case 2:
+									this.img.image_ghost = this.img.image_inky_left;
+									break;
+								case 3:
+									this.img.image_ghost = this.img.image_pinky_left;
+									break;
+							}
+							lghost.setIcon(this.img.image_ghost); 
 							break;
 						case '→':
-							this.img.image_ghost = this.img.image_gost_right;
+							switch (i % 4) {
+								case 0:
+									this.img.image_ghost = this.img.image_blinky_right;
+									break;
+								case 1:
+									this.img.image_ghost = this.img.image_clyde_right;
+									break;
+								case 2:
+									this.img.image_ghost = this.img.image_inky_right;
+									break;
+								case 3:
+									this.img.image_ghost = this.img.image_pinky_right;
+									break;
+							}
+							lghost.setIcon(this.img.image_ghost); 
 							break;
 					}
 				} else {

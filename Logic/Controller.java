@@ -51,6 +51,31 @@ public class Controller {
 	private Pacman pacman;
 
 	/**
+	 * Nombre de fruits mangé dans le niveau.
+	 */
+	private int fruits_eaten = 0;
+	
+	/**
+	 * Booléen qui prévient si le fruit bonus a été mis en place.
+	 */
+	private boolean bonus_spawn = false;
+	
+	/**
+	 * Abscisse position fruit bonus.
+	 */
+	private int bonus_pos_x = 0;
+	
+	/**
+	 * Abscisse position fruit bonus.
+	 */
+	private int bonus_pos_y = 0;
+	
+	/**
+	 * Fruit bonus
+	 */
+	private Fruits bonus_fruit = null;
+	
+	/**
 	 * Constructeur.
 	 */
 	public Controller() {
@@ -137,6 +162,8 @@ public class Controller {
 	 * -Repositionne le pacman au bon endroit.
 	 */
 	private void maj_controller() {
+		this.fruits_eaten = 0;
+		this.bonus_spawn = false;
 		int numero_board = get_actual_level() % this.max_level;
 		this.actual_level = numero_board + 1;
 		Board tmp_board = this.list_boards.get(numero_board);
@@ -459,6 +486,16 @@ public class Controller {
 	}
 
 	/**
+	 * Détermine le fruit bonus généré.
+	 * @return Fruit bonus.
+	 */
+	public Fruits get_bonus() {
+		Fruits fruit = this.bonus_fruit;
+		this.bonus_fruit = null;
+		return fruit;
+	}
+	
+	/**
 	 * Met à jour les données exploitables par l'affichage à chaque étape:<br>
 	 * -Déplace Pacman<br>
 	 * -Change l'orientation de Pacman<br>
@@ -476,6 +513,21 @@ public class Controller {
 		ghost_random_move();
 		Fruits tmp_fruit = pacman.touched_Fruit(this.list_fruits);
 		int index=fruit_eaten(tmp_fruit);
+		if (index != -1) {
+			this.fruits_eaten += 1;
+		}
+		if (this.fruits_eaten == 40 && tmp_fruit != null) {
+			this.bonus_pos_x = tmp_fruit.getPos_X();
+			this.bonus_pos_y = tmp_fruit.getPos_Y();
+		}
+		if (this.fruits_eaten >= 80 && !this.bonus_spawn) {
+			System.out.println(this.bonus_pos_x);
+			System.out.println(this.bonus_pos_y);
+			Fruits fruit = new Fruits(this.bonus_pos_x, this.bonus_pos_y, 'c', 100);
+			this.bonus_fruit = fruit;
+			list_fruits.add(fruit);
+			this.bonus_spawn = true;
+		}
 		if (all_fruits_are_consumed()) {
 			maj_controller();
 		}
