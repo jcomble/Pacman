@@ -11,9 +11,7 @@ Concepteurs et développeurs: Jean-Yves Comble, Mohammed Ez-Zraidy, Noa Descours
 ## Java 18 nécessaire pour lancer le jeu:
 
 * Windows : https://www.oracle.com/java/technologies/downloads/#jdk18-windows
-
 * Linux : https://www.oracle.com/java/technologies/downloads/#jdk18-linux
-
 * macOS : https://www.oracle.com/java/technologies/downloads/#jdk18-mac
 
 ## Conseils pour avoir une bonne expérience de jeu:
@@ -23,7 +21,6 @@ Concepteurs et développeurs: Jean-Yves Comble, Mohammed Ez-Zraidy, Noa Descours
 ## Comment lancer le jeu?
 
 * Sur Windows il suffit de cliquer sur le raccourci nommé PACMAN_WIN
-
 * Sur Linux ou MacOS, ouvrez un invite de commande, dirigez-vous vers le dossier Pacman et
 lancez la commande java -jar pacman.jar
 
@@ -32,6 +29,8 @@ lancez la commande java -jar pacman.jar
 Pacman est poursuivi par des fantômes, dans des couloirs étroits, il doit manger tous les Pac-Dots et les fruits pour s'échapper et changer de niveau.
 Les super-gommes permettent de rendre les fantômes vulnérables pour que Pacman puisse les dévorer.
 Obtenez le meilleur score!
+* Les flèches directionnelles vous permettent de déplacer Pacman dans les 4 sens cardinaux.
+* Vous pouvez enregistrer la prochaine direction de déplacement juste par une pression de la touche directionnelle.
 * Les fantômes donnent 200, 400, 800 ou 1600 points selon le nombre de fantômes dévoré d'affilé après avoir mangé une super-gomme.
 * Les Pac-Dots donnent 10 points.
 * Les fruits donnent de 100 à 5000 points.
