@@ -26,3 +26,16 @@ Concepteurs et développeurs: Jean-Yves Comble, Mohammed Ez-Zraidy, Noa Descours
 
 * Sur Linux ou MacOS, ouvrez un invite de commande, dirigez-vous vers le dossier Pacman et
 lancez la commande java -jar pacman.jar
+
+## Comment fonctionne le jeu?
+
+Pacman est poursuivi par des fantômes, dans des couloirs étroits, il doit manger tous les Pac-Dots et les fruits pour s'échapper et changer de niveau.
+Les super-gommes permettent de rendre les fantômes vulnérables pour que Pacman puisse les dévorer.
+Obtenez le meilleur score!
+* Les fantômes donnent 200, 400, 800 ou 1600 points selon le nombre de fantômes dévoré d'affilé après avoir mangé une super-gomme.
+* Les Pac-Dots donnent 10 points.
+* Les fruits donnent de 100 à 5000 points.
+Attention! Les fantômes suivent les couloirs et changent de direction au choix (aléatoire) à chaque embranchement.
+Pacman dispose de 4 vies et à chaque fois qu'un fantôme non vulnérable touche Pacman, il perd une vie.
+Une cerise apparait au bout de 80 fruits/Pac-dots mangés à chaque niveau.
+Il y a 3 niveaux, à chaque niveau, tout va plus vite! À vous de jouer pour remporter la victoire!
