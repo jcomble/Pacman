@@ -58,7 +58,7 @@ public class Pacman implements Colision, Movement, Score {
 		this.pos_Y = pos_y_base;
 		this.init_pos_X = pos_x_base;
 		this.init_pos_Y = pos_y_base;
-		this.points_Vie = 3;
+		this.points_Vie = 4;
 		this.score = 0;
 		this.combo = 0;
 		this.direction = '→';
