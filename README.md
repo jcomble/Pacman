@@ -19,3 +19,10 @@ Concepteurs et développeurs: Jean-Yves Comble, Mohammed Ez-Zraidy, Noa Descours
 ## Conseils pour avoir une bonne expérience de jeu:
 
 * Il est conseillé d'avoir une mise à l'échelle de l'écran à 100%. (Panneau de configuration -> Système et sécurité  -> Écran -> Mise à l'échelle et disposition sur Windows 10)
+
+## Comment lancer le jeu?
+
+* Sur Windows il suffit de cliquer sur le raccourci nommé PACMAN_WIN
+
+* Sur Linux ou MacOS, ouvrez un invite de commande, dirigez-vous vers le dossier Pacman et
+lancez la commande java -jar pacman.jar
